@@ -10,22 +10,25 @@ CREATE TABLE students(
     year INT ,
     start_year INT,
     end_year INT,
-    department_id INT,
+    dept_id INT,
     email VARCHAR(100),
     phone VARCHAR(12),
     address VARCHAR(300),
     CONSTRAINT fk
-    FOREIGN KEY (department_id) REFERENCES department(id)
+    FOREIGN KEY (dept_id) REFERENCES department(id)
 );
 CREATE TABLE staffs(
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     role VARCHAR(50),
+    dept_id INT,
     year_of_hire INT,
     email VARCHAR(100),
     phone VARCHAR(12),
     address VARCHAR(300),
     experience_in_year INT
+    CONSTRAINT fk
+    FOREIGN KEY (dept_id) REFERENCES department(id)
 );
 CREATE TABLE exam(
     sub_id INT,
