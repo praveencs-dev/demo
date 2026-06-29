@@ -39,24 +39,29 @@ CREATE TABLE exam(
 CREATE TABLE marks(
     sub_id INT,
     student_id INT,
+    allotment_id INT,
     total_mark INT,
     obtained_mark INT,
     status VARCHAR(4),
     CONSTRAINT fk
-    FOREIGN KEY(sub_id) REFERENCES exam(sub_id),
-    FOREIGN KEY(student_id) REFERENCES students(id)
+    FOREIGN KEY(sub_id) REFERENCES subject(sub_id),
+    FOREIGN KEY(student_id) REFERENCES students(id),
+    FOREIGN KEY(allotment_id) REFERENCES dept_sub_allocation(allotment_id)
 );
 CREATE TABLE subject(
-    sub_id PRIMARY KEY,
+    sub_id SERIAL PRIMARY KEY,
     sub_name VARCHAR(100),
+    sub_semester  INT,
     type VARCHAR(50)
 );
 CREATE TABLE dept_sub_allocation(
-    id SERIAL,
+    allotment_id SERIAL PRIMARY KEY,
+    sub_id INT,
     department_id INT,
+    staff_id INT,
     semester INT,
     year INT,
-    sub_id INT,
-    FOREIGN KEY(sub_id) REFERENCES exam(sub_id),
-    FOREIGN KEY(department_id) REFERENCES department(id)
+    FOREIGN KEY(sub_id) REFERENCES subject(sub_id),
+    FOREIGN KEY(department_id) REFERENCES department(id),
+    FOREIGN KEY(staff_id) REFERENCES staffs(id)
 );
