@@ -13,12 +13,11 @@ CREATE TABLE student(
     end_year INT,
     dept_id INT,
     dob DATE,
-    email VARCHAR(100),
-    phone VARCHAR(12),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(12) UNIQUE,
     address VARCHAR(300),
     CONSTRAINT fk
-    FOREIGN KEY (dept_id) REFERENCES department(id),
-    UNIQUE (email,phone)
+    FOREIGN KEY (dept_id) REFERENCES department(id)
 );
 CREATE TABLE staffs(
     id SERIAL PRIMARY KEY,
