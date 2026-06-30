@@ -16,7 +16,7 @@ async function insertstud(student) {
             [student.name, student.year, student.start_year, student.end_year, student.dept_id, student.email, student.phone, student.address, student.dob]);
         return "inserted"
     } catch (err) {
-        return err
+        return err.detail
     }
 }
 

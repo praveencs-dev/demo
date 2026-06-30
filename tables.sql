@@ -5,7 +5,7 @@ CREATE TABLE department(
     duration_type VARCHAR(50)
 );
 CREATE TABLE student(
-    s_no  VARCHAR(20) SERIAL,
+    s_no  SERIAL,
     id VARCHAR(20),
     name VARCHAR(100),
     year INT ,
@@ -17,7 +17,8 @@ CREATE TABLE student(
     phone VARCHAR(12),
     address VARCHAR(300),
     CONSTRAINT fk
-    FOREIGN KEY (dept_id) REFERENCES department(id)
+    FOREIGN KEY (dept_id) REFERENCES department(id),
+    UNIQUE (email,phone)
 );
 CREATE TABLE staffs(
     id SERIAL PRIMARY KEY,
@@ -30,7 +31,8 @@ CREATE TABLE staffs(
     address VARCHAR(300),
     experience_in_year INT
     CONSTRAINT fk
-    FOREIGN KEY (dept_id) REFERENCES department(id)
+    FOREIGN KEY (dept_id) REFERENCES department(id),
+    
 );
 CREATE TABLE exam(
     sub_id INT,

@@ -37,7 +37,13 @@ async function insertstud(req, res) {
     }
     
     let result=await model.insertstud(stud);
-    return resSender(res, 200, { message: result })
+    if(result=="inserted"){
+        return resSender(res, 200, { message: result })
+    }
+    else{
+        return resSender(res, 400, { message: result })
+    }
+    
     
 }
 module.exports = {
