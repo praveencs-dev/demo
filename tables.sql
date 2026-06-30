@@ -4,13 +4,15 @@ CREATE TABLE department(
     course_duration INT,
     duration_type VARCHAR(50)
 );
-CREATE TABLE students(
-    id SERIAL PRIMARY KEY,
+CREATE TABLE student(
+    s_no  VARCHAR(20) SERIAL,
+    id VARCHAR(20),
     name VARCHAR(100),
     year INT ,
     start_year INT,
     end_year INT,
     dept_id INT,
+    dob DATE,
     email VARCHAR(100),
     phone VARCHAR(12),
     address VARCHAR(300),
@@ -65,3 +67,18 @@ CREATE TABLE dept_sub_allocation(
     FOREIGN KEY(department_id) REFERENCES department(id),
     FOREIGN KEY(staff_id) REFERENCES staffs(id)
 );
+CREATE FUNCTION studid()
+RETURNs TRIGGER
+AS $$
+BEGIN
+UPDATE students SET id=NEW.start_year ||'00'||NEW.dept_id || (5000 + NEW.s_no) WHERE email=NEW.email;
+RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER studid
+AFTER INSERT 
+ON students
+FOR EACH ROW
+EXECUTE FUNCTION studid();
