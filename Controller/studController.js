@@ -20,7 +20,7 @@ async function insertstud(req, res) {
         address: /\w/
     }
 
-    let valid = validator(res, student_needs, student)
+    let valid = validator(student_needs, student)
 
     if (valid == true) {
         let result = await usermodel.insertstud(student);
