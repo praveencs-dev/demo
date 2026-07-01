@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./globalfunctions')
 const express=require('express');
 
 const studentrouter=require('./Router/studentRouter');

@@ -4,8 +4,7 @@ CREATE TABLE department(
     course_duration INT,
     duration_type VARCHAR(50)
 );
-CREATE TABLE student(
-    s_no  SERIAL,
+CREATE TABLE students(
     id VARCHAR(20),
     name VARCHAR(100),
     year INT ,
@@ -16,6 +15,7 @@ CREATE TABLE student(
     email VARCHAR(100) UNIQUE,
     phone VARCHAR(12) UNIQUE,
     address VARCHAR(300),
+    s_no SERIAL,
     CONSTRAINT fk
     FOREIGN KEY (dept_id) REFERENCES department(id)
 );
@@ -72,14 +72,15 @@ CREATE FUNCTION studid()
 RETURNs TRIGGER
 AS $$
 BEGIN
-UPDATE students SET id=NEW.start_year ||'00'||NEW.dept_id || (5000 + NEW.s_no) WHERE email=NEW.email;
+NEW.id:=NEW.start_year ||'00'||NEW.dept_id || (5000 + NEW.s_no);
 RETURN NEW;
 END;
 $$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER studid
-AFTER INSERT 
+BEFORE INSERT
 ON students
 FOR EACH ROW
 EXECUTE FUNCTION studid();
+

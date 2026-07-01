@@ -1,50 +1,41 @@
-const model = require('../Model/userModel')
-global.resSender = (res, statuscode, message) => {
-    res.status(statuscode).json(message);
-}
+const usermodel = require('../Model/userModel');
+
+
 async function getstud(req, res) {
-    let data = await model.getstud();
-    return resSender(res, 200, data);
+    let data = await usermodel.getstud();
+    return ressender(res, 200, data);
 }
+
 async function insertstud(req, res) {
-    let stud = req.body;
-    if (stud.name == null || !(/^[a-zA-Z]+$/).test(stud.name)) {
-        return resSender(res, 400, { message: "name is invalid/required" })
+    var student = req.body;
+    var student_needs = {
+        name: /^[a-zA-Z]+$/,
+        year: /^\d{1}$/,
+        start_year: /^\d{4}$/,
+        end_year: /^\d{4}$/,
+        dept_id: /^\d/,
+        dob: /^\d{4}-\d{2}-\d{2}/,
+        email: /\w@+\w/,
+        phone: /^\d{10}/,
+        address: /\w/
     }
-    if (stud.year == null || !(/^\d{1}/).test(stud.year)) {
-        return resSender(res, 400, { message: "year is invalid/required" })
-    }
-    if (stud.start_year == null || !(/^\d{4}/).test(stud.start_year)) {
-        return resSender(res, 400, { message: "start year is invalid/required" })
-    }
-    if (stud.end_year == null || !(/^\d{4}/).test(stud.end_year)) {
-        return resSender(res, 400, { message: "end year is invalid/required" })
-    }
-    if (stud.dept_id == null || !(/^\d/).test(stud.dept_id)) {
-        return resSender(res, 400, { message: "department id is invalid/required" })
-    }
-    if(stud.dob==null || !(/^\d{4}-\d{2}-\d{2}/).test(stud.dob)){
-        return resSender(res, 400, { message: " date of birth is invalid/required" })
+
+    let valid = validator(res, student_needs, student)
+
+    if (valid == true) {
+        let result = await usermodel.insertstud(student);
+        if (result == "inserted") {
+            return ressender(res, 200, { message: result });
         }
-    if (stud.email == null || !stud.email.includes("@")) {
-        return resSender(res, 400, { message: "email is invalid/required" })
+        else {
+            return ressender(res, 400, { message: result });
+        }
     }
-    if (stud.phone == null || !(/^\d{10}/).test(stud.phone)) {
-        return resSender(res, 400, { message: "phone no is invalid/required" })
+    else {
+        return ressender(res, 400, { message: valid.message })
     }
-    if (stud.address == null || !(/\w/).test(stud.address)) {
-        return resSender(res, 400, { message: " addres is required" })
-    }
-    
-    let result=await model.insertstud(stud);
-    if(result=="inserted"){
-        return resSender(res, 200, { message: result })
-    }
-    else{
-        return resSender(res, 400, { message: result })
-    }
-    
-    
+
+
 }
 module.exports = {
     getstud,
