@@ -19,7 +19,7 @@ async function insertstaff(req,res){
         experience_in_year: /^\d{2}$/
     }
 
-    
+
     let result=await staffmodel.insertstaff(staff);
     if(result=="inserted"){
         ressender(res,200,{message:result})
@@ -39,8 +39,20 @@ async function updatestaff(req,res){
     }
 
 }
+async function deletestaff(req,res){
+    let {id}=req.body;
+    let result= await staffmodel.deletestaff(id);
+    if(!result.rowCount==0){
+        ressender(res,200,{message:"deleted"})
+    }
+    else{
+        ressender(res,400,{message:"staff not founded"})
+    }
+
+}
 module.exports={
     getstaff,
     insertstaff,
-    updatestaff
+    updatestaff,
+    deletestaff
 }

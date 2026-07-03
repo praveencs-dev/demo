@@ -12,7 +12,7 @@ async function insertsub(req, res) {
         semester:/\d{1}/,
         type:/^[a-zA-Z]+/
     };
-    
+
     let valid = validator(sub_needs, subject);
     if (valid == true) {
         let result = await submodel.insertsub(subject);
@@ -37,8 +37,19 @@ async function updatesub(req, res) {
         ressender(res, 400, { message: result })
     }
 }
+async function deletesubject(req,res){
+    let {id}=req.body;
+    let result= await submodel.deletesubject(id);
+    if(!result.rowCount==0){
+        ressender(res,200,{message:"deleted"})
+    }
+    else{
+        ressender(res,400,{message:"subject not founded"})
+    }
+}
 module.exports={
     getsub,
     insertsub,
-    updatesub
+    updatesub,
+    deletesubject
 }

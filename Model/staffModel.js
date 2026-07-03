@@ -32,8 +32,14 @@ async function updatestaff(staff){
         }
     }
 }
+async function deletestaff(id){
+    let result=await db.query('DELETE FROM  staffs WHERE id=$1',[id])
+    return result;
+}
+
 module.exports={
     getstaff,
     insertstaff,
-    updatestaff
+    updatestaff,
+    deletestaff
 }

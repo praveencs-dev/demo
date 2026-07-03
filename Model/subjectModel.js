@@ -28,6 +28,10 @@ async function updatesub(subject){
         }
     }
 }
-module.exports={
-    getsub,insertsub,updatesub
+async function deletesubject(id){
+    let result=await db.query('DELETE FROM  subject WHERE id=$1',[id]);
+    return result;
 }
+module.exports={
+    getsub,insertsub,updatesub,deletesubject
+};
