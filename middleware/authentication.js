@@ -1,8 +1,9 @@
+const { ressender} = require('../utils/globalfunctions');
 const jwt = require("jsonwebtoken");
 function authentication(req, res, next) {
     let auth = req.headers.authorization;
     if (!auth) {
-        return resSender(res, 401, { message: "token is missing" });
+        return ressender(res, 401, { message: "token is missing" });
     } else {
         let token=auth.split(' ')[1];
         try{
@@ -11,7 +12,7 @@ function authentication(req, res, next) {
             return  next()
         }
         catch(err) {
-            return resSender(res, 401, { message: "invalid sign" })
+            return ressender(res, 401, { message: "invalid sign" })
         }
         
     }

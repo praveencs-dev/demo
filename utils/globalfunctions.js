@@ -1,7 +1,7 @@
-global.ressender = (res, statuscode, message) => {
+exports.ressender = (res, statuscode, message) => {
     res.status(statuscode).json(message);
 }
-global.validator = ( expected, actual) => {
+exports.validator = (expected, actual) => {
     for (let key in expected) {
         if (key in actual) {
             if (!expected[key].test(actual[key])) {

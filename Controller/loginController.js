@@ -1,6 +1,7 @@
-const jwt=require('jsonwebtoken')
+const jwt=require('jsonwebtoken');
 
 const usermodel=require('../Model/userModel');
+const {ressender,validator}=require('../utils/globalfunctions');
 
 
 async function login(req,res){

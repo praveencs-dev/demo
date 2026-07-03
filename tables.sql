@@ -1,11 +1,11 @@
 CREATE TABLE department(
     Dept_name VARCHAR(150),
-    id SERIAL PRIMARY KEY,
+    id INT DEFAULT nextval('dept_id') PRIMARY KEY,
     course_duration INT,
     duration_type VARCHAR(50)
 );
 CREATE TABLE students(
-    id VARCHAR(20),
+    id VARCHAR(20) PRIMARY KEY,
     name VARCHAR(100),
     year INT ,
     start_year INT,
@@ -20,18 +20,17 @@ CREATE TABLE students(
     FOREIGN KEY (dept_id) REFERENCES department(id)
 );
 CREATE TABLE staffs(
-    id SERIAL PRIMARY KEY,
+    id INT DEFAULT nextval('staff_id') PRIMARY KEY,
     name VARCHAR(100),
     role VARCHAR(50),
     dept_id INT,
-    year_of_hire INT,
-    email VARCHAR(100),
-    phone VARCHAR(12),
+    onboarding_date DATE,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(12) UNIQUE,
     address VARCHAR(300),
-    experience_in_year INT
+    experience_in_year INT,
     CONSTRAINT fk
-    FOREIGN KEY (dept_id) REFERENCES department(id),
-    
+    FOREIGN KEY (dept_id) REFERENCES department(id)
 );
 CREATE TABLE exam(
     sub_id INT,
@@ -52,9 +51,9 @@ CREATE TABLE marks(
     FOREIGN KEY(allotment_id) REFERENCES dept_sub_allocation(allotment_id)
 );
 CREATE TABLE subject(
-    sub_id SERIAL PRIMARY KEY,
-    sub_name VARCHAR(100),
-    sub_semester  INT,
+    id INT DEFAULT nextval('sub_id') PRIMARY KEY,
+    name VARCHAR(100),
+    semester  INT,
     type VARCHAR(50)
 );
 CREATE TABLE dept_sub_allocation(
@@ -84,3 +83,14 @@ ON students
 FOR EACH ROW
 EXECUTE FUNCTION studid();
 
+CREATE SEQUENCE dept_id
+START WITH 1001
+INCREMENT BY 1;
+
+CREATE SEQUENCE staff_id
+START WITH 2001
+INCREMENT BY 1;
+
+CREATE SEQUENCE sub_id
+START WITH 3001
+INCREMENT BY 1;
