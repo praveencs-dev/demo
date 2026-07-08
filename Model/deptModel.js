@@ -5,9 +5,9 @@ async function getdept() {
 }
 async function insertdept(dept) {
     try {
-        await db.query("INSERT INTO department(Dept_name,course_duration,duration_type)values($1,$2,$3)",
-            [dept.name, dept.course_duration, dept.duration_type]);
-        return "inserted"
+         let result=await db.query("INSERT INTO department(Dept_name,course_duration,duration_type)values($1,$2,$3)",
+            [dept.Dept_name, dept.course_duration, dept.duration_type]);
+        return result
     }
     catch (err) {
         return {
@@ -18,9 +18,9 @@ async function insertdept(dept) {
 }
 async function updatedept(dept) {
     try {
-        await db.query(`UPDATE department SET ${dept.column}=$1 WHERE id=$2`,
+        let result=await db.query(`UPDATE department SET ${dept.column}=$1 WHERE id=$2`,
             [dept.value,dept.id]);
-        return "updated"
+        return result
     }
     catch (err) {
         return {
@@ -30,8 +30,8 @@ async function updatedept(dept) {
     }
 }
 async function deletedept(id){
-    await db.query(`UPDATE department SET status='inactive' WHERE id=$1`,[id]);
-    return "deactivated"
+    let result=await db.query(`UPDATE department SET status='inactive' WHERE id=$1`,[id]);
+    return result
 }
 module.exports={
     getdept,

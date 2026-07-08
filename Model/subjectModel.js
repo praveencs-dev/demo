@@ -6,8 +6,8 @@ async function getsub(){
 }
 async function insertsub(subject){
     try{
-        await db.query('INSERT INTO subject(name,semester,type)values($1,$2,$3)',[subject.name,subject.semester,subject.type]);
-        return "inserted"
+         let result=await db.query('INSERT INTO subject(name,semester,type)values($1,$2,$3)',[subject.name,subject.semester,subject.type]);
+        return result
     }
     catch(err){
         return {
@@ -18,8 +18,8 @@ async function insertsub(subject){
 }
 async function updatesub(subject){
     try{
-        await db.query(`UPDATE subject SET ${subject.property}=$1 WHERE id=$2`,[subject.value,subject.id]);
-        return "updated";
+        let result =await db.query(`UPDATE subject SET ${subject.property}=$1 WHERE id=$2`,[subject.value,subject.id]);
+        return result;
     }
     catch(err){
         return {

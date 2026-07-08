@@ -6,10 +6,10 @@ async function getstaff(){
 }
 async function insertstaff(staff){
     try{
-        await db.query("INSERT INTO staffs(name,role,dept_id,onboarding_date,email,phone,address,experience_in_year)values($1,$2,$3,$4,$5,$6,$7,$8)",
+        let result =await db.query("INSERT INTO staffs(name,role,dept_id,onboarding_date,email,phone,address,experience_in_year)values($1,$2,$3,$4,$5,$6,$7,$8)",
         [staff.name,staff.role,staff.dept_id,staff.onboarding_date,staff.email,staff.phone,staff.address,staff.experience_in_year]
     )
-    return "inserted"
+        return result 
     }
     catch(err){
         return {
@@ -20,10 +20,10 @@ async function insertstaff(staff){
 }
 async function updatestaff(staff){
     try{
-        await db.query(`UPDATE staffs SET ${staff.property}=$1 WHERE id=$2`,
+        let result=await db.query(`UPDATE staffs SET ${staff.property}=$1 WHERE id=$2`,
             [staff.value,staff.id]
         );
-        return "updated"
+        return result;
     }
     catch(err){
         return {

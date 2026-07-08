@@ -1,11 +1,11 @@
 CREATE TABLE department(
-    Dept_name VARCHAR(150),
+    Dept_name VARCHAR(150) UNIQUE,
     id INT DEFAULT nextval('dept_id') PRIMARY KEY,
     course_duration INT,
-    duration_type VARCHAR(50)
+    duration_type VARCHAR(50),
 );
 CREATE TABLE students(
-    id VARCHAR(20) PRIMARY KEY,
+    id VARCHAR(20),
     name VARCHAR(100),
     year INT ,
     start_year INT,
@@ -36,7 +36,8 @@ CREATE TABLE exam(
     sub_id INT,
     exam_date DATE,
     CONSTRAINT fk
-    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
+    FOREIGN KEY (sub_id) REFERENCES subject(sub_id),
+    check(exam_date~'/\d{4}+\d{2}+\d{2}/')
 );
 CREATE TABLE marks(
     sub_id INT,
@@ -52,18 +53,18 @@ CREATE TABLE marks(
 );
 CREATE TABLE subject(
     id INT DEFAULT nextval('sub_id') PRIMARY KEY,
-    name VARCHAR(100),
+    name VARCHAR(100) UNIQUE,
     semester  INT,
     type VARCHAR(50)
 );
 CREATE TABLE dept_sub_allocation(
-    allotment_id SERIAL PRIMARY KEY,
-    sub_id INT,
+    allotment_id INT DEFAULT nextval('all_id') PRIMARY KEY,
     department_id INT,
-    staff_id INT,
+    sub_id INT,
     semester INT,
+    staff_id INT,
     year INT,
-    FOREIGN KEY(sub_id) REFERENCES subject(sub_id),
+    FOREIGN KEY(sub_id) REFERENCES subject(id),
     FOREIGN KEY(department_id) REFERENCES department(id),
     FOREIGN KEY(staff_id) REFERENCES staffs(id)
 );
@@ -94,3 +95,15 @@ INCREMENT BY 1;
 CREATE SEQUENCE sub_id
 START WITH 3001
 INCREMENT BY 1;
+
+CREATE SEQUENCE all_id
+START WITH 4001
+INCREMENT BY 1;
+
+select s.name as name ,d.Dept_name as deptatment, json_agg(json_build_object('id',sub.id,'name',sub.name)) as subjects
+from students as s
+join department as d on s.dept_id=d.id
+join dept_sub_allocation as dsa on d.id=dsa.department_id
+join subject as sub on dsa.sub_id=sub.id
+where dsa.semester=$1
+group by s.name,d.dept_name

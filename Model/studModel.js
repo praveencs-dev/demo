@@ -9,12 +9,22 @@ async function insertstud(student) {
         return "inserted"
     } catch (err) {
         return {
-            code:err.code,
-            detail:err.detail
+            code: err.code,
+            detail: err.detail
         }
     }
 }
-module.exports={
+async function allocated_subject(semester) {
+    return (await db.query(`select s.name as name ,d.Dept_name as deptatment, json_agg(json_build_object('id',sub.id,'name',sub.name)) as subjects
+                           from students as s
+                           join department as d on s.dept_id=d.id
+                           join dept_sub_allocation as dsa on d.id=dsa.department_id
+                           join subject as sub on dsa.sub_id=sub.id
+                           where dsa.semester=$1
+                           group by s.name,d.dept_name`,[semester])).rows
+}
+module.exports = {
     getstud,
-    insertstud
+    insertstud,
+    allocated_subject
 }

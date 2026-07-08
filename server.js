@@ -2,9 +2,9 @@ require('dotenv').config();
 
 const express=require('express');
 
-const studentrouter=require('./Router/studentRouter');
 const logrouter=require('./Router/loginRoute');
 const regrouter=require('./Router/registerRouter');
+const studentrouter=require('./Router/studentRouter');
 const deptrouter=require('./Router/deptRouter');
 const staffrouter=require('./Router/staffRouter');
 const subjectrouter=require('./Router/subjectRouter');

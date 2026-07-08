@@ -17,7 +17,7 @@ async function insertstud(req, res) {
         end_year: /^\d{4}$/,
         dept_id: /^\d/,
         dob: /^\d{4}-\d{2}-\d{2}/,
-        email: /\w@+\w/,
+        email: /f/,
         phone: /^\d{10}/,
         address: /\w+/
     }
@@ -39,7 +39,13 @@ async function insertstud(req, res) {
 
 
 }
+async function allocated_subject(req,res){
+    let {semester}=req.body;
+    let result=await studmodel.allocated_subject(semester);
+    return ressender(res, 400,result)
+}
 module.exports = {
     getstud,
-    insertstud
+    insertstud,
+    allocated_subject
 }

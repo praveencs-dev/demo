@@ -16,11 +16,11 @@ async function insertsub(req, res) {
     let valid = validator(sub_needs, subject);
     if (valid == true) {
         let result = await submodel.insertsub(subject);
-        if (result == "inserted") {
-            ressender(res, 200, { message: result })
+        if (result.rowCount) {
+            ressender(res, 200, {command:result.command,rowcount:result.rowCount,staus:"inserted"});
         }
         else {
-            ressender(res, 400, { message: result })
+            ressender(res, 400, { message: result });
         }
     }
     else {
@@ -30,18 +30,21 @@ async function insertsub(req, res) {
 async function updatesub(req, res) {
     let subject = req.body;
     let result = await submodel.updatesub(subject);
-    if (result == "updated") {
-        ressender(res, 200, { message: result })
+    if (result.rowCount==1) {
+        ressender(res, 200, {command:result.command,rowcount:result.rowCount,status:"updated"});
+    }
+    else if(result.rowCount==0){
+        ressender(res, 200, {command:result.command,rowcount:result.rowCount,status:"subject not founded"});
     }
     else {
-        ressender(res, 400, { message: result })
+        ressender(res, 400, { message: result });
     }
 }
 async function deletesubject(req,res){
     let {id}=req.body;
     let result= await submodel.deletesubject(id);
     if(!result.rowCount==0){
-        ressender(res,200,{message:"deleted"})
+        ressender(res,200,{command:result.command,rowcount:result.rowCount})
     }
     else{
         ressender(res,400,{message:"subject not founded"})
