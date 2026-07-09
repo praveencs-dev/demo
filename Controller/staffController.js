@@ -59,6 +59,7 @@ async function deletestaff(req, res) {
     }
 
 }
+
 module.exports = {
     getstaff,
     insertstaff,

@@ -19,7 +19,8 @@ async function insertstud(req, res) {
         dob: /^\d{4}-\d{2}-\d{2}/,
         email: /f/,
         phone: /^\d{10}/,
-        address: /\w+/
+        address: /\w+/,
+        password:/./
     }
 
     let valid = validator(student_needs, student)

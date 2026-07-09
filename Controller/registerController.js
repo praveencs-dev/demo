@@ -1,4 +1,4 @@
-const usermodel=require("../Model/userModel");
+const usermodel=require("../Model/loginModel");
 const {ressender,validator}=require('../utils/globalfunctions');
 async function register(req,res){
     let {name,email,age,password,role}=req.body;

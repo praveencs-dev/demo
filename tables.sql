@@ -24,13 +24,14 @@ CREATE TABLE staffs(
     name VARCHAR(100),
     role VARCHAR(50),
     dept_id INT,
-    onboarding_date DATE,
+    onboarding_date DATE,     
     email VARCHAR(100) UNIQUE,
     phone VARCHAR(12) UNIQUE,
     address VARCHAR(300),
     experience_in_year INT,
+    password TEXT
     CONSTRAINT fk
-    FOREIGN KEY (dept_id) REFERENCES department(id)
+    FOREIGN KEY (dept_id) REFERENCES department(id);
 );
 CREATE TABLE exam(
     sub_id INT,
@@ -40,14 +41,12 @@ CREATE TABLE exam(
     check(exam_date~'/\d{4}+\d{2}+\d{2}/')
 );
 CREATE TABLE marks(
-    sub_id INT,
-    student_id INT,
+    student_id TEXT,
     allotment_id INT,
     total_mark INT,
     obtained_mark INT,
     status VARCHAR(4),
     CONSTRAINT fk
-    FOREIGN KEY(sub_id) REFERENCES subject(sub_id),
     FOREIGN KEY(student_id) REFERENCES students(id),
     FOREIGN KEY(allotment_id) REFERENCES dept_sub_allocation(allotment_id)
 );

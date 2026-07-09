@@ -6,10 +6,10 @@ async function getstaff(){
 }
 async function insertstaff(staff){
     try{
-        let result =await db.query("INSERT INTO staffs(name,role,dept_id,onboarding_date,email,phone,address,experience_in_year)values($1,$2,$3,$4,$5,$6,$7,$8)",
-        [staff.name,staff.role,staff.dept_id,staff.onboarding_date,staff.email,staff.phone,staff.address,staff.experience_in_year]
+        let result =await db.query("INSERT INTO staffs(name,role,dept_id,onboarding_date,email,phone,address,experience_in_year,password)values($1,$2,$3,$4,$5,$6,$7,$8,$9)",
+        [staff.name,staff.role,staff.dept_id,staff.onboarding_date,staff.email,staff.phone,staff.address,staff.experience_in_year,staff.password]
     )
-        return result 
+        return result;
     }
     catch(err){
         return {
@@ -36,6 +36,9 @@ async function deletestaff(id){
     let result=await db.query('DELETE FROM  staffs WHERE id=$1',[id])
     return result;
 }
+
+
+
 
 module.exports={
     getstaff,
