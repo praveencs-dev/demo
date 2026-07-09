@@ -48,7 +48,9 @@ CREATE TABLE marks(
     status VARCHAR(4),
     CONSTRAINT fk
     FOREIGN KEY(student_id) REFERENCES students(id),
-    FOREIGN KEY(allotment_id) REFERENCES dept_sub_allocation(allotment_id)
+    FOREIGN KEY(allotment_id) REFERENCES dept_sub_allocation(allotment_id),
+    UNIQUE (student_id,allotment_id),
+    CHECK (obtained_mark <= total_mark)
 );
 CREATE TABLE subject(
     id INT DEFAULT nextval('sub_id') PRIMARY KEY,
