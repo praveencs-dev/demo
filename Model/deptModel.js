@@ -18,7 +18,7 @@ async function insertdept(dept) {
 }
 async function updatedept(dept) {
     try {
-        let result=await db.query(`UPDATE department SET ${dept.column}=$1 WHERE id=$2`,
+        let result=await db.query(`UPDATE department SET ${dept.property}=$1 WHERE id=$2`,
             [dept.value,dept.id]);
         return result
     }

@@ -1,6 +1,8 @@
+const authorization=require('../Model/authorizationModel')
 const { ressender} = require('../utils/globalfunctions');
-function markauthorization(req,res,next){
-    if(req.user.role=="teaching"){
+ async function markauthorization(req,res,next){
+    let result= await authorization.staff_autn(req.user.id);
+    if(!result.length==0){
         return next();
     }
     else{

@@ -10,22 +10,8 @@ async function getstud(req, res) {
 async function insertstud(req, res) {
     var student = req.body;
     
-    var student_needs = {
-        name: /^[a-zA-Z\s]+$/,
-        year: /^\d{1}$/,
-        start_year: /^\d{4}$/,
-        end_year: /^\d{4}$/,
-        dept_id: /^\d/,
-        dob: /^\d{4}-\d{2}-\d{2}/,
-        email: /f/,
-        phone: /^\d{10}/,
-        address: /\w+/,
-        password:/./
-    }
+   
 
-    let valid = validator(student_needs, student)
-
-    if (valid == true) {
         let result = await studmodel.insertstud(student);
         if (result == "inserted") {
             return ressender(res, 200, { message: result });
@@ -33,11 +19,21 @@ async function insertstud(req, res) {
         else {
             return ressender(res, 400, { message: result });
         }
+
+}
+
+async function updatestud(req, res) {
+    let stud= req.body;
+    let result = await studmodel.updatestud(stud);
+    if (result.rowCount == 1) {
+        ressender(res, 200, { command: result.command, rowcount: result.rowCount, status: "updated" });
+    }
+    else if (result.rowCount == 0) {
+        ressender(res, 200, { command: result.command, rowcount: result.rowCount, status: "student not founded" });
     }
     else {
-        return ressender(res, 400, { message: valid.message })
+        ressender(res, 400, { message: result });
     }
-
 
 }
 async function allocated_subject(req,res){
@@ -48,5 +44,6 @@ async function allocated_subject(req,res){
 module.exports = {
     getstud,
     insertstud,
+    updatestud,
     allocated_subject
 }

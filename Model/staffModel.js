@@ -1,7 +1,7 @@
 const { Result } = require('pg');
 const db=require('../config/db');
 async function getstaff(){
-    let result=(await db.query('SELECT * FROM staffs')).rows
+    let result=(await db.query('SELECT id,name,role,dept_id,onboarding_date,email,phone,address,experience_in_year FROM staffs')).rows
     return result
 }
 async function insertstaff(staff){

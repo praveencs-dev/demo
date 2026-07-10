@@ -3,6 +3,7 @@ CREATE TABLE department(
     id INT DEFAULT nextval('dept_id') PRIMARY KEY,
     course_duration INT,
     duration_type VARCHAR(50),
+    status SET DEFAULT "Active"
 );
 CREATE TABLE students(
     id VARCHAR(20),
@@ -69,6 +70,14 @@ CREATE TABLE dept_sub_allocation(
     FOREIGN KEY(department_id) REFERENCES department(id),
     FOREIGN KEY(staff_id) REFERENCES staffs(id)
 );
+CREATE TABLE users(
+    id INT DEFAULT nextval('user_id') PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(200) UNIQUE,
+    password TEXT
+
+)
+
 CREATE FUNCTION studid()
 RETURNs TRIGGER
 AS $$
@@ -99,6 +108,10 @@ INCREMENT BY 1;
 
 CREATE SEQUENCE all_id
 START WITH 4001
+INCREMENT BY 1;
+
+CREATE SEQUENCE user_id
+START WITH 5001
 INCREMENT BY 1;
 
 select s.name as name ,d.Dept_name as deptatment, json_agg(json_build_object('id',sub.id,'name',sub.name)) as subjects
