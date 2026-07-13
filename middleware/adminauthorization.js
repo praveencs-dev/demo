@@ -10,4 +10,4 @@ const { ressender} = require('../utils/globalfunctions');
             return next()
         }
 }
-module.exports=adminauthorization;
+module.exports=adminauthorization;34
